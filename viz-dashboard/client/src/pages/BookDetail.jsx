@@ -235,6 +235,48 @@ export default function BookDetail() {
         </div>
       </div>
 
+      {/* ═══ SECTION 1: Relationship Graph (hero section) ═══ */}
+      {relationships && relationships.nodes?.length > 0 && (
+        <section className="bg-bg-secondary border border-border rounded-xl p-6">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-text-primary">
+              Character Relationships
+            </h3>
+            <p className="text-xs text-text-muted mt-0.5">
+              Pairs, factions &amp; emotional dynamics &mdash; click nodes or edges for details
+            </p>
+          </div>
+
+          {/* Summary stats strip */}
+          <div className="flex flex-wrap gap-3 mb-4">
+            {(() => {
+              const spirals = relationships.edges.filter(e => e.relationship_type === 'spiral_couple' || e.relationship_type === 'mirror').length;
+              const allies = relationships.edges.filter(e => e.relationship_type === 'allies' || e.relationship_type === 'uneasy_allies').length;
+              const enemies = relationships.edges.filter(e => e.relationship_type === 'enemies' || e.relationship_type === 'rivals' || e.relationship_type === 'nemesis').length;
+              const inversions = relationships.edges.filter(e => e.emotional_pattern === 'inversion').length;
+              const arcShifts = relationships.nodes.filter(n => n.arc_shift).length;
+
+              return [
+                { label: 'Relationships', value: relationships.edges.length, color: '#8B5CF6' },
+                { label: 'Alliances', value: allies, color: '#22C55E' },
+                { label: 'Conflicts', value: enemies, color: '#EF4444' },
+                { label: 'Spiral/Mirror', value: spirals, color: '#F59E0B' },
+                { label: 'Inversions', value: inversions, color: '#06B6D4' },
+                { label: 'Arc Shifts', value: arcShifts, color: '#EC4899' },
+                { label: 'Factions', value: relationships.clusters.length, color: '#A855F7' },
+              ].map(s => (
+                <div key={s.label} className="bg-bg-primary border border-border rounded-lg px-3 py-2 text-center min-w-[80px]">
+                  <div className="text-[10px] text-text-muted uppercase tracking-wider">{s.label}</div>
+                  <div className="text-base font-mono font-bold" style={{ color: s.color }}>{s.value}</div>
+                </div>
+              ));
+            })()}
+          </div>
+
+          <RelationshipGraph data={relationships} />
+        </section>
+      )}
+
       {/* ═══ Chapter extremes callouts ═══ */}
       {heartbeat?.blended_strip && heartbeat.blended_strip.length > 0 && (() => {
         const strip = heartbeat.blended_strip;
@@ -373,47 +415,7 @@ export default function BookDetail() {
         )}
       </section>
 
-      {/* ═══ SECTION 2.5: Relationship Graph ═══ */}
-      {relationships && relationships.nodes?.length > 0 && (
-        <section className="bg-bg-secondary border border-border rounded-xl p-6">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-text-primary">
-              Character Relationships
-            </h3>
-            <p className="text-xs text-text-muted mt-0.5">
-              Pairs, factions &amp; emotional dynamics &mdash; click nodes or edges for details
-            </p>
-          </div>
-
-          {/* Summary stats strip */}
-          <div className="flex flex-wrap gap-3 mb-4">
-            {(() => {
-              const spirals = relationships.edges.filter(e => e.relationship_type === 'spiral_couple' || e.relationship_type === 'mirror').length;
-              const allies = relationships.edges.filter(e => e.relationship_type === 'allies' || e.relationship_type === 'uneasy_allies').length;
-              const enemies = relationships.edges.filter(e => e.relationship_type === 'enemies' || e.relationship_type === 'rivals' || e.relationship_type === 'nemesis').length;
-              const inversions = relationships.edges.filter(e => e.emotional_pattern === 'inversion').length;
-              const arcShifts = relationships.nodes.filter(n => n.arc_shift).length;
-
-              return [
-                { label: 'Relationships', value: relationships.edges.length, color: '#8B5CF6' },
-                { label: 'Alliances', value: allies, color: '#22C55E' },
-                { label: 'Conflicts', value: enemies, color: '#EF4444' },
-                { label: 'Spiral/Mirror', value: spirals, color: '#F59E0B' },
-                { label: 'Inversions', value: inversions, color: '#06B6D4' },
-                { label: 'Arc Shifts', value: arcShifts, color: '#EC4899' },
-                { label: 'Factions', value: relationships.clusters.length, color: '#A855F7' },
-              ].map(s => (
-                <div key={s.label} className="bg-bg-primary border border-border rounded-lg px-3 py-2 text-center min-w-[80px]">
-                  <div className="text-[10px] text-text-muted uppercase tracking-wider">{s.label}</div>
-                  <div className="text-base font-mono font-bold" style={{ color: s.color }}>{s.value}</div>
-                </div>
-              ));
-            })()}
-          </div>
-
-          <RelationshipGraph data={relationships} />
-        </section>
-      )}
+      {/* (Relationship graph moved to top of page) */}
 
       {/* ═══════════════════════════════════════════════════════════════════════ */}
       {/* ═══ NEW DASHBOARD: Character Deep Dive ═══ */}
