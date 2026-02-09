@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: tree-of-life-viz
+    runtime: python
+    rootDir: viz-dashboard/server
+    buildCommand: |
+      pip install -r requirements.txt &&
+      cd ../client &&
+      npm install &&
+      npm run build
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: NODE_VERSION
+        value: "20"
+      - key: STATIC_DATA
+        value: /opt/render/project/src/viz-dashboard/server/static_data
+      - key: STATIC_DIR
+        value: /opt/render/project/src/viz-dashboard/client/dist

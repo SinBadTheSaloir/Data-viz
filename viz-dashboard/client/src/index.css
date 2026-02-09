@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0f0f13;
+  --color-bg-secondary: #16161d;
+  --color-bg-card: #1c1c27;
+  --color-bg-hover: #24243a;
+  --color-border: #2a2a3d;
+  --color-text-primary: #e4e4ed;
+  --color-text-secondary: #8888a0;
+  --color-text-muted: #5c5c72;
+
+  /* Culture colors */
+  --color-culture-french: #3B82F6;
+  --color-culture-english: #22C55E;
+  --color-culture-russian: #EF4444;
+  --color-culture-japanese: #A855F7;
+  --color-culture-elizabethan: #EAB308;
+
+  /* Emotion colors */
+  --color-emotion-hope: #22C55E;
+  --color-emotion-fear: #A855F7;
+  --color-emotion-anger: #EF4444;
+  --color-emotion-pride: #3B82F6;
+  --color-emotion-shame: #F97316;
+  --color-emotion-resolve: #14B8A6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
